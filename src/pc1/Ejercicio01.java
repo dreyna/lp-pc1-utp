@@ -7,43 +7,84 @@ public class Ejercicio01 {
     public static void main(String[] args) {
         // TODO code application logic here
          Scanner sc = new Scanner(System.in);
-        String nombre, clasificacion;
-        double productividad, responsabilidad, trabajoEquipo, promedio;
-        
-        System.out.print("Ingrese nombre del trabajador: ");
+        String nombre, nombreSala, nombreDia;
+        int tipoSala, cantidad;
+        char dia;
+        double tarifa = 0, subtotal, recargo, descuento, totalFinal;
+
+        System.out.print("Ingrese nombre del cliente: ");
         nombre = sc.nextLine();
 
-        System.out.print("Ingrese puntaje en productividad: ");
-        productividad = sc.nextDouble();
+        System.out.println("Seleccione tipo de sala:");
+        System.out.println("1. 2D");
+        System.out.println("2. 3D");
+        System.out.println("3. VIP");
+        System.out.print("Opción: ");
+        tipoSala = sc.nextInt();
 
-        System.out.print("Ingrese puntaje en responsabilidad: ");
-        responsabilidad = sc.nextDouble();
+        System.out.print("Ingrese día L(Lunes a jueves) o F(Viernes a domingo): ");
+        dia = sc.next().toUpperCase().charAt(0);
 
-        System.out.print("Ingrese puntaje en trabajo en equipo: ");
-        trabajoEquipo = sc.nextDouble();
+        System.out.print("Ingrese cantidad de entradas: ");
+        cantidad = sc.nextInt();
 
-        promedio = (productividad + responsabilidad + trabajoEquipo) / 3;
-
-        if (productividad < 8 || responsabilidad < 8 || trabajoEquipo < 8) {
-            clasificacion = "Observado";
-        } else if (promedio >= 18 && promedio <= 20) {
-            clasificacion = "Sobresaliente";
-        } else if (promedio >= 15) {
-            clasificacion = "Muy bueno";
-        } else if (promedio >= 12) {
-            clasificacion = "Bueno";
-        } else if (promedio >= 11) {
-            clasificacion = "Regular";
-        } else {
-            clasificacion = "Deficiente";
+        switch (tipoSala) {
+            case 1 -> {
+                nombreSala = "2D";
+                tarifa = 12;
+            }
+            case 2 -> {
+                nombreSala = "3D";
+                tarifa = 18;
+            }
+            case 3 -> {
+                nombreSala = "VIP";
+                tarifa = 25;
+            }
+            default -> {
+                nombreSala = "No válido";
+                tarifa = 0;
+            }
         }
 
-        System.out.println("\n--- REPORTE DE DESEMPEÑO ---");
-        System.out.println("Trabajador: " + nombre);
-        System.out.printf("Promedio: %.2f\n", promedio);
-        System.out.println("Clasificación final: " + clasificacion);
+        if (tarifa == 0) {
+            System.out.println("Tipo de sala inválido.");
+        } else {
+            subtotal = tarifa * cantidad;
+
+            if (dia == 'F') {
+                nombreDia = "Viernes a domingo";
+                recargo = subtotal * 0.10;
+            } else if (dia == 'L') {
+                nombreDia = "Lunes a jueves";
+                recargo = 0;
+            } else {
+                nombreDia = "Día no válido";
+                recargo = 0;
+            }
+
+            double subtotalConRecargo = subtotal + recargo;
+
+            if (cantidad >= 5) {
+                descuento = subtotalConRecargo * 0.08;
+            } else {
+                descuento = 0;
+            }
+
+            totalFinal = subtotalConRecargo - descuento;
+
+            System.out.println("\n--- REPORTE DE COMPRA ---");
+            System.out.println("Cliente: " + nombre);
+            System.out.println("Sala: " + nombreSala);
+            System.out.println("Día: " + nombreDia);
+            System.out.printf("Subtotal: S/ %.2f\n", subtotal);
+            System.out.printf("Recargo: S/ %.2f\n", recargo);
+            System.out.printf("Descuento: S/ %.2f\n", descuento);
+            System.out.printf("Total final: S/ %.2f\n", totalFinal);
+        }
 
         sc.close();
+       
     }
     
 }

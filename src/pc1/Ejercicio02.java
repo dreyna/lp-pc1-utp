@@ -7,65 +7,42 @@ public class Ejercicio02 {
 
     public static void main(String[] args) {
         // TODO code application logic here
-        Scanner sc = new Scanner(System.in);
-
-        String nombre, nombrePlan;
-        int plan, edad;
-        double tarifaBase = 0, descuento, montoFinal;
-
-        System.out.print("Ingrese nombre del cliente: ");
+         Scanner sc = new Scanner(System.in);
+        String nombre, clasificacion;
+        double productividad, responsabilidad, trabajoEquipo, promedio;
+        
+        System.out.print("Ingrese nombre del trabajador: ");
         nombre = sc.nextLine();
 
-        System.out.println("Seleccione plan:");
-        System.out.println("1. Básico");
-        System.out.println("2. Full");
-        System.out.println("3. Premium");
-        System.out.print("Opción: ");
-        plan = sc.nextInt();
+        System.out.print("Ingrese puntaje en productividad: ");
+        productividad = sc.nextDouble();
 
-        System.out.print("Ingrese edad: ");
-        edad = sc.nextInt();
+        System.out.print("Ingrese puntaje en responsabilidad: ");
+        responsabilidad = sc.nextDouble();
 
-        switch (plan) {
-            case 1:
-                nombrePlan = "Básico";
-                tarifaBase = 90;
-                break;
-            case 2:
-                nombrePlan = "Full";
-                tarifaBase = 140;
-                break;
-            case 3:
-                nombrePlan = "Premium";
-                tarifaBase = 200;
-                break;
-            default:
-                nombrePlan = "No válido";
-                tarifaBase = 0;
-        }
+        System.out.print("Ingrese puntaje en trabajo en equipo: ");
+        trabajoEquipo = sc.nextDouble();
 
-        if (tarifaBase == 0) {
-            System.out.println("Plan inválido.");
+        promedio = (productividad + responsabilidad + trabajoEquipo) / 3;
+
+        if (productividad < 8 || responsabilidad < 8 || trabajoEquipo < 8) {
+            clasificacion = "Observado";
+        } else if (promedio >= 18 && promedio <= 20) {
+            clasificacion = "Sobresaliente";
+        } else if (promedio >= 15) {
+            clasificacion = "Muy bueno";
+        } else if (promedio >= 12) {
+            clasificacion = "Bueno";
+        } else if (promedio >= 11) {
+            clasificacion = "Regular";
         } else {
-            if (plan == 3 && edad >= 60) {
-                descuento = tarifaBase * 0.25;
-            } else if (edad < 18) {
-                descuento = tarifaBase * 0.15;
-            } else if (edad >= 60) {
-                descuento = tarifaBase * 0.20;
-            } else {
-                descuento = 0;
-            }
-
-            montoFinal = tarifaBase - descuento;
-
-            System.out.println("\n--- REPORTE DE MEMBRESÍA ---");
-            System.out.println("Cliente: " + nombre);
-            System.out.println("Plan: " + nombrePlan);
-            System.out.printf("Tarifa base: S/ %.2f\n", tarifaBase);
-            System.out.printf("Descuento: S/ %.2f\n", descuento);
-            System.out.printf("Monto final: S/ %.2f\n", montoFinal);
+            clasificacion = "Deficiente";
         }
+
+        System.out.println("\n--- REPORTE DE DESEMPEÑO ---");
+        System.out.println("Trabajador: " + nombre);
+        System.out.printf("Promedio: %.2f\n", promedio);
+        System.out.println("Clasificación final: " + clasificacion);
 
         sc.close();
     }
